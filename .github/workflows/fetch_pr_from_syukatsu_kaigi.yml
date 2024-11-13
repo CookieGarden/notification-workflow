@@ -16,7 +16,7 @@ jobs:
         uses: peter-evans/github-pull-request-comment@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: syukatsu-kaigi/syukatsu-kaigi.jp
+          repository: rails-turorial
           pull-request: ${{ github.event.pull_request.number }}  # PR番号を動的に取得
           
       - name: Display PR details

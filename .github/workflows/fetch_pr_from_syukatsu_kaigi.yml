@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout the a repository
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Fetch PR details from b repository
         uses: peter-evans/github-pull-request-comment@v3

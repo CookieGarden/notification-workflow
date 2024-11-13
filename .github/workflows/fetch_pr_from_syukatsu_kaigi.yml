@@ -1,0 +1,26 @@
+
+name: Fetch PR from syukatsu-kaigi
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-pr-info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the a repository
+      - uses: actions/checkout@v3
+
+      - name: Fetch PR details from b repository
+        uses: peter-evans/github-pull-request-comment@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: syukatsu-kaigi/syukatsu-kaigi.jp
+          pull-request: ${{ github.event.pull_request.number }}  # PR番号を動的に取得
+          
+      - name: Display PR details
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR URL: ${{ github.event.pull_request.html_url }}"      # Runs a set of commands using the runners shell

@@ -1,26 +1,19 @@
-
-name: Fetch PR from syukatsu-kaigi
-
+name: list_pr
 on:
   workflow_dispatch:
-
 jobs:
-  fetch-pr-info:
+  list_pr:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout the a repository
-        uses: actions/checkout@v3
-
-      - name: Fetch PR details from b repository
-        uses: peter-evans/pull-request-comment@v3
+      - name: Generate App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: CookieGarden/rails-turorial
-          pull-request: ${{ github.event.pull_request.number }}  # PR番号を動的に取得
-          
-      - name: Display PR details
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: syukatsu-kaigi
+      - name: List PR
         run: |
-          echo "PR Number: ${{ github.event.pull_request.number }}"
-          echo "PR Title: ${{ github.event.pull_request.title }}"
-          echo "PR URL: ${{ github.event.pull_request.html_url }}"      # Runs a set of commands using the runners shell
+          gh pr list --repo syukatsu-kaigi/syukatsu-kaigi.jp
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
